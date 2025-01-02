@@ -1,0 +1,44 @@
+
+import React, { useState, useEffect } from 'react';
+import './Header.css';
+
+const Header = () => {
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  // Load the theme from localStorage on initial render
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    const isDark = savedTheme === 'dark';
+    setIsDarkTheme(isDark);
+    document.body.className = isDark ? 'dark-theme' : 'light-theme';
+  }, []);
+
+  // Toggle theme and save it to localStorage
+  const toggleTheme = () => {
+    const newTheme = !isDarkTheme;
+    setIsDarkTheme(newTheme);
+    document.body.className = newTheme ? 'dark-theme' : 'light-theme';
+    localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+  };
+
+  return (
+    <header className={`header ${isDarkTheme ? 'dark' : 'light'}`}>
+      <div className="logo">
+        <img src="logo.png" alt="Logo" style={{ height: '40px' }} />
+      </div>
+      <nav className="nav">
+        <ul className="nav-tabs">
+          <li><a href="/">Home</a></li>
+          <li><a href="/classification">Classification</a></li>
+          <li><a href="/settings">Settings</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <button className="theme-toggle" onClick={toggleTheme}>
+        {isDarkTheme ? '🌞 Light Mode' : '🌙 Dark Mode'}
+      </button>
+    </header>
+  );
+};
+
+export default Header;
