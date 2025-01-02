@@ -42,3 +42,79 @@ const Header = () => {
 };
 
 export default Header;
+
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f4f4f4; /* Default Light Theme */
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.header.dark {
+  background-color: #333; /* Dark Theme */
+  color: #f4f4f4;
+}
+
+.nav-tabs {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-tabs a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-tabs a:hover {
+  text-decoration: underline;
+}
+
+.theme-toggle {
+  background-color: transparent;
+  border: 1px solid currentColor;
+  color: inherit;
+  padding: 5px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.theme-toggle:hover {
+  opacity: 0.8;
+}
+
+/* Global Theme Styles */
+body.light-theme {
+  background-color: #fff;
+  color: #000;
+}
+
+body.dark-theme {
+  background-color: #121212;
+  color: #fff;
+}
+
+/* Logo Styles */
+.logo img {
+  height: 40px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-tabs {
+    display: none; /* Hide navigation tabs on small screens */
+  }
+
+  .theme-toggle {
+    font-size: 12px;
+  }
+}
+
