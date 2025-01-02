@@ -1,0 +1,190 @@
+/* Header styling */
+.header {
+  background-color: #318a91;
+  padding: 10px 20px;
+  color: rgb(134, 18, 18);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.header.dark{
+  background-color: #333;
+  color: #f4f4f4;
+}
+
+.nav {
+  width: 100%;
+}
+
+.nav-tabs {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+}
+
+.nav-tabs li {
+  margin: 0 45px;
+}
+
+.nav-tabs a {
+  color: white;
+  text-decoration: none;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.nav-tabs a:hover {
+  color: #e67e22;
+  border-bottom: 2px solid #e6c222;
+  padding-bottom: 2px;
+}
+
+/* Logo styling */
+.logo {
+  width: 100px;
+  height: auto;
+  display: inline-block;
+  margin: 10px 20px;
+  border-radius: 50px;
+  justify-content: flex-start;
+  margin-left: 0; /* Reset margin-left to shift logo left */
+}
+
+.logo:hover {
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  background-color: transparent;
+  border: 0px solid currentColor;
+  color: inherit;
+  padding: 5px, 15px;
+  /*padding: 10px;  Adjust padding for better appearance */
+  cursor: pointer;
+  border-radius: 50%; /* Make it a circular button */
+  font-size: 14px;
+  margin-left: auto;
+  transition: opacity 0.3s ease;
+}
+
+.theme-toggle:hover {
+  opacity: 0.8;
+}
+
+/* Light and Dark theme body styles */
+body.light-theme {
+  background-color: #fff;
+  color: #000;
+}
+
+body.dark-theme {
+  background-color: #121212;
+  color: #fff;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .nav-tabs {
+    display: none; /* Hide navigation tabs on small screens */
+  }
+
+  .theme-toggle {
+    font-size: 22px; /* Adjust font size for smaller screens */
+  }
+}
+
+/* For the toggle switch styling */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #4caf50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+import React, { useState, useEffect } from 'react';
+import './Header.css';
+import logo from '../assets/logo.png';
+
+const Header = () => {
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    const isDark = savedTheme === 'dark';
+    setIsDarkTheme(isDark);
+    document.body.className = isDark ? 'dark-theme' : 'light-theme';
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = !isDarkTheme;
+    setIsDarkTheme(newTheme);
+    document.body.className = newTheme ? 'dark-theme' : 'light-theme';
+    localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+  };
+
+  return (
+    <header className={`header ${isDarkTheme ? 'dark' : 'light'}`}>
+      <nav className="nav">
+        <img src={logo} alt="logo" className="logo" />
+        <ul className="nav-tabs">
+          <li><a href="/">Home</a></li>
+          <li><a href="/classification">Classification</a></li>
+          <li><a href="/settings">Settings</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+        </ul>
+        <button className="theme-toggle" onClick={toggleTheme}>
+          <label className="switch">
+            <input type="checkbox" checked={isDarkTheme} onChange={toggleTheme} />
+            <span className="slider"></span>
+          </label>
+        </button>
+      </nav>
+    </header>
+  );
+};
+
+export default Header;
