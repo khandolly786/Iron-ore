@@ -1,3 +1,4 @@
+
 /* Header styling */
 .header {
   background-color: #318a91;
@@ -5,35 +6,41 @@
   color: rgb(134, 18, 18);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Space between logo, nav, and toggle */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-.header.dark{
+.header.dark {
   background-color: #333;
   color: #f4f4f4;
 }
 
-.nav {
-  width: 100%;
+/* Logo styling */
+.logo {
+  flex: 0 0 auto; /* Prevent resizing */
+  width: 60px;
+  height: auto;
+  border-radius: 50%;
+  margin-right: 20px;
 }
 
+/* Navigation tabs centered */
 .nav-tabs {
   list-style: none;
   display: flex;
-  justify-content: center;
-  margin: 0;
+  justify-content: center; /* Center nav links */
+  margin: 0 auto; /* Auto margins for centering */
   padding: 0;
   gap: 20px;
 }
 
 .nav-tabs li {
-  margin: 0 45px;
+  margin: 0;
 }
 
 .nav-tabs a {
   color: white;
   text-decoration: none;
-  font-size: 36px;
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -43,68 +50,18 @@
   padding-bottom: 2px;
 }
 
-/* Logo styling */
-.logo {
-  width: 100px;
-  height: auto;
-  display: inline-block;
-  margin: 10px 20px;
-  border-radius: 50px;
-  justify-content: flex-start;
-  margin-left: 0; /* Reset margin-left to shift logo left */
-}
-
-.logo:hover {
-  opacity: 0.5;
-  transition: opacity 0.3s ease;
-}
-
-/* Theme toggle button */
+/* Theme toggle button aligned to the right */
 .theme-toggle {
-  background-color: transparent;
-  border: 0px solid currentColor;
-  color: inherit;
-  padding: 5px, 15px;
-  /*padding: 10px;  Adjust padding for better appearance */
-  cursor: pointer;
-  border-radius: 50%; /* Make it a circular button */
-  font-size: 14px;
+  flex: 0 0 auto; /* Prevent resizing */
   margin-left: auto;
-  transition: opacity 0.3s ease;
+  position: relative;
 }
 
-.theme-toggle:hover {
-  opacity: 0.8;
-}
-
-/* Light and Dark theme body styles */
-body.light-theme {
-  background-color: #fff;
-  color: #000;
-}
-
-body.dark-theme {
-  background-color: #121212;
-  color: #fff;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-  .nav-tabs {
-    display: none; /* Hide navigation tabs on small screens */
-  }
-
-  .theme-toggle {
-    font-size: 22px; /* Adjust font size for smaller screens */
-  }
-}
-
-/* For the toggle switch styling */
 .switch {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 50px;
+  height: 24px;
 }
 
 .switch input {
@@ -128,11 +85,11 @@ body.dark-theme {
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
+  height: 20px;
+  width: 20px;
   border-radius: 50%;
-  left: 4px;
-  bottom: 4px;
+  left: 2px;
+  bottom: 2px;
   background-color: white;
   transition: 0.4s;
 }
@@ -144,47 +101,25 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(26px);
 }
-import React, { useState, useEffect } from 'react';
-import './Header.css';
-import logo from '../assets/logo.png';
 
-const Header = () => {
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+/* Light and Dark theme body styles */
+body.light-theme {
+  background-color: #fff;
+  color: #000;
+}
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    const isDark = savedTheme === 'dark';
-    setIsDarkTheme(isDark);
-    document.body.className = isDark ? 'dark-theme' : 'light-theme';
-  }, []);
+body.dark-theme {
+  background-color: #121212;
+  color: #fff;
+}
 
-  const toggleTheme = () => {
-    const newTheme = !isDarkTheme;
-    setIsDarkTheme(newTheme);
-    document.body.className = newTheme ? 'dark-theme' : 'light-theme';
-    localStorage.setItem('theme', newTheme ? 'dark' : 'light');
-  };
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .nav-tabs {
+    display: none; /* Hide navigation tabs on small screens */
+  }
 
-  return (
-    <header className={`header ${isDarkTheme ? 'dark' : 'light'}`}>
-      <nav className="nav">
-        <img src={logo} alt="logo" className="logo" />
-        <ul className="nav-tabs">
-          <li><a href="/">Home</a></li>
-          <li><a href="/classification">Classification</a></li>
-          <li><a href="/settings">Settings</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact Us</a></li>
-        </ul>
-        <button className="theme-toggle" onClick={toggleTheme}>
-          <label className="switch">
-            <input type="checkbox" checked={isDarkTheme} onChange={toggleTheme} />
-            <span className="slider"></span>
-          </label>
-        </button>
-      </nav>
-    </header>
-  );
-};
-
-export default Header;
+  .theme-toggle {
+    font-size: 18px;
+  }
+}
